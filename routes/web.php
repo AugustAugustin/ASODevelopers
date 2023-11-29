@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\HouseController;
+use App\Http\Controllers\FlatController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +17,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'home.index')->name('home');
+
+Route::resource('projects', ProjectController::class)->names([
+    'index' => 'projects'
+]);
+
+Route::resource('houses', HouseController::class)->names([
+    'index' => 'houses'
+]);
+
+Route::resource('flats', FlatController::class)->names([
+    'index' => 'flats'
+]);
+
+Route::get('averageCostProject/{projects}', [FlatController::class, 'averageCostProject']);
